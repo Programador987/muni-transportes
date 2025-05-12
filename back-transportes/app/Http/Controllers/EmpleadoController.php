@@ -7,13 +7,11 @@ use Illuminate\Http\Request;
 
 class EmpleadoController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    
     public function index(Request $request)
     {
-        $porPagina = $request->query('per_page', 5); 
-        return Trabajador::paginate($porPagina);
+        $porPagina = $request->query('per_page', 6); 
+        return Empleado::paginate($porPagina);
     }
 
     /**
