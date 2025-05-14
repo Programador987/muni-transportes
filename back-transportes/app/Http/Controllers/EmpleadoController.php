@@ -10,7 +10,7 @@ class EmpleadoController extends Controller
     
     public function index(Request $request)
     {
-        $porPagina = $request->query('per_page', 5); 
+        $porPagina = $request->query('per_page', 10); 
         return Empleado::paginate($porPagina);
     }
 //Prueba numero 1
