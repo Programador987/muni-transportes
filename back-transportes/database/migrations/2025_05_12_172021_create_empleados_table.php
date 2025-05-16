@@ -14,6 +14,10 @@ return new class extends Migration
         Schema::create('empleados', function (Blueprint $table) {
             $table->id();
             $table->string('nombre');
+            $table->string('apellido');
+            $table->string('email')->unique();
+            $table->string('telefono')->nullable();
+            $table->string('DNI')->unique();
             $table->timestamps();
         });
     }

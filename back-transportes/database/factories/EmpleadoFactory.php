@@ -3,7 +3,7 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-
+///holla mundo
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Empleado>
  */
@@ -17,7 +17,11 @@ class EmpleadoFactory extends Factory
     public function definition(): array
     {
         return [
-            'nombre'=> $this->faker->text()
+            'nombre'=> $this->faker->text(),
+            'apellido' => $this->faker->lastName,
+            'email' => $this->faker->unique()->safeEmail,
+            'telefono' => $this->faker->phoneNumber,
+            'DNI' => $this->faker->unique()->bothify('########'),
         ];
     }
 }
