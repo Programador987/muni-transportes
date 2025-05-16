@@ -1,5 +1,3 @@
-<?php
-
 namespace App\Http\Controllers;
 
 use App\Models\Empleado;
@@ -7,82 +5,56 @@ use Illuminate\Http\Request;
 
 class EmpleadoController extends Controller
 {
-    
+    // Listar empleados (paginados)
     public function index(Request $request)
     {
-        $porPagina = $request->query('per_page', 10); 
-        return Empleado::paginate($porPagina);
-    }
-//Prueba numero 1
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+        return Empleado::paginate($request->query('per_page', 10));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+    // Crear nuevo empleado
     public function store(Request $request)
     {
-            $validated = $request->validate([
-            'nombre' => 'required|string',
-            'apellido' => 'required|string',
+        $validated = $request->validate([
+            'nombre' => 'required|string|max:255',
+            'apellido' => 'required|string|max:255',
             'email' => 'required|email|unique:empleados',
-            'telefono' => 'nullable|string',
+            'telefono' => 'nullable|string|max:20',
+            'DNI' => 'required|string|unique:empleados|max:20',
         ]);
 
         $empleado = Empleado::create($validated);
-
         return response()->json($empleado, 201);
     }
 
-    /**
-     * Display the specified resource.
-     */
+    // Ver un empleado por ID
     public function show($id)
     {
-        $empleado = Empleado::findOrFail($id);
+        $empleado = Empleado::find($id);
+        if (!$empleado) {
+            return response()->json(['message' => 'Empleado no encontrado'], 404);
+        }
         return response()->json($empleado);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Empleado $empleado)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
+    // Actualizar un empleado
     public function update(Request $request, Empleado $empleado)
     {
-        $empleado = Empleado::findOrFail($id);
-
         $validated = $request->validate([
-            'nombre' => 'sometimes|required|string',
-            'apellido' => 'sometimes|required|string',
-            'email' => 'sometimes|required|email|unique:empleados,email,' . $id,
-            'telefono' => 'nullable|string',
+            'nombre' => 'sometimes|required|string|max:255',
+            'apellido' => 'sometimes|required|string|max:255',
+            'email' => 'sometimes|required|email|unique:empleados,email,' . $empleado->id,
+            'telefono' => 'nullable|string|max:20',
+            'DNI' => 'sometimes|required|string|unique:empleados,DNI,' . $empleado->id,
         ]);
 
         $empleado->update($validated);
-
         return response()->json($empleado);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
+    // Eliminar un empleado
     public function destroy(Empleado $empleado)
     {
-        $empleado = Empleado::findOrFail($id);
         $empleado->delete();
-
-        return response()->json(['mensaje' => 'Empleado eliminado']);
+        return response()->json(['message' => 'Empleado eliminado correctamente']);
     }
 }
