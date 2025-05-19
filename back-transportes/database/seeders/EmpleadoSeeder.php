@@ -15,18 +15,6 @@ class EmpleadoSeeder extends Seeder
     {
         Empleado::factory()->count(50)->create();
 
-                // READ - Obtener empleados
-        $empleados = Empleado::all();
-        dump("Total empleados:", $empleados->count());
-
-        // UPDATE - Actualizar el primero
-        $empleado = Empleado::first();
-        $empleado->update(['nombre' => 'Nombre Actualizado']);
-        dump("Empleado actualizado:", $empleado->nombre);
-
-        // DELETE - Eliminar el último
-        $ultimo = Empleado::latest()->first();
-        $ultimo->delete();
-        dump("Empleado eliminado:", $ultimo->id);
+        
     }
 }
