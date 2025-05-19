@@ -1,7 +1,7 @@
 <template>
   <q-page class="q-pa-md">
     <h2>Lista de Empleados</h2>
-    <q-btn label="Agregar Empleado" color="primary" icon="add" @click="abrirFormulario()" />
+    <q-btn label="Agregar Empleado" color="blue" icon="add" @click="abrirFormulario()" />
 
     <q-separator class="q-my-md" />
 
@@ -13,7 +13,7 @@
     />
 
     <q-dialog v-model="dialogoVisible">
-      <q-card class="q-pa-md" style="min-width: 300px">
+      <q-card class="q-pa-md" style="min-width: 400px">
         <EmpleadoForm
           :empleado="empleadoSeleccionado"
           @guardar="guardarEmpleado"
@@ -53,6 +53,7 @@ const abrirFormulario = (empleado = null) => {
 };
 
 const cerrarFormulario = () => {
+  empleadoSeleccionado.value = null;
   dialogoVisible.value = false;
 };
 
@@ -61,7 +62,8 @@ const guardarEmpleado = async (empleado) => {
     if (empleado.id) {
       await EmpleadoService.actualizar(empleado.id, empleado);
     } else {
-      await EmpleadoService.crear(empleado);
+      const { ...empleadoDataSinId } = empleado;
+      await EmpleadoService.crear(empleadoDataSinId);
     }
     await obtenerEmpleados();
     cerrarFormulario();
