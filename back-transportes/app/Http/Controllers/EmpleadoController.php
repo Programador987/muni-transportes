@@ -9,7 +9,7 @@ class EmpleadoController extends Controller
     // Listar empleados (paginados)
     public function index(Request $request)
     {
-        
+        return Empleado::paginate($request->query('per_page', 50));
     }
 
     // Crear nuevo empleado
