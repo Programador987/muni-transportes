@@ -15,6 +15,6 @@ class EmpleadoSeeder extends Seeder
     {
         Empleado::factory()->count(50)->create();
 
-        
+
     }
 }

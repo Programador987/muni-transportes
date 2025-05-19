@@ -17,7 +17,7 @@ class EmpleadoFactory extends Factory
     public function definition(): array
     {
         return [
-            'nombre'=> $this->faker->text(),
+            'nombre'=> $this->faker->firstName,
             'apellido' => $this->faker->lastName,
             'email' => $this->faker->unique()->safeEmail,
             'telefono' => $this->faker->phoneNumber,
